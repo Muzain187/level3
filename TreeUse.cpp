@@ -1,5 +1,6 @@
 #include<iostream>
 #include<vector>
+#include<queue>
 #include "TreeNode.h"
 
 using namespace std;
@@ -20,6 +21,44 @@ TreeNode<int> *takeInput(){
 	}
 	return root;
 }
+TreeNode<int>* tekeInputLevelWise(){
+	int rootData;
+	cout<<"Enter root data :";
+	cin>>rootData;
+	
+	TreeNode<int>*root = new TreeNode<int>(rootData);
+	queue<TreeNode<int>*> pendingNode;
+	pendingNode.push(root);
+	
+	while(pendingNode.size() != 0){
+		TreeNode<int>* front = pendingNode.front();
+		pendingNode.pop();
+		
+		cout<<"Enter number of children of "<<front->data<<endl;
+		int numchild;
+		cin>>numchild;
+		
+		for(int i=0; i<numchild; i++){
+			int chid;
+			cout<<"Enter "<<i<<" th child of "<<front->data<<endl;
+			cin>>childData;
+			TreeNode<int>* child = new TreeNode<int>(childData);
+			front->children.push(child);
+			pendingNode.push(child);
+		}
+	}
+	return root;
+}
+void printDepth(TreeNode<int>* root,int k){
+	if(root == NULL)
+		return;
+	if(k == 0){
+		cout<<root->data<<endl;
+		return;
+	}
+	for(int i=0; i<root->children.size(); i++)
+		printDepth(root->children[i],k-1);
+}
 
 void printTree(TreeNode<int> *root){
 	if(root == NULL)
@@ -37,7 +76,7 @@ void printTree(TreeNode<int> *root){
 int main(){
 	TreeNode <int> *root = takeInput();
 	printTree(root);
-	
+	printDepth(root,3);
 	return 0;
 }
 
