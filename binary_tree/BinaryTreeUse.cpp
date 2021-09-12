@@ -35,6 +35,12 @@ BinaryTreeNode<int>* takeInput(){
 	return root;
 }
 
+int numberOfNode(BinaryTreeNode<int>* root){
+	if(root == NULL)
+		return 0;
+	return 1 + numberOfNode(root->left) + numberOfNode(root->right);
+}
+
 BinaryTreeNode<int>* takeInputLevelWise(){
 	int rootData;
 	cout<<"Enter data "<<endl;
